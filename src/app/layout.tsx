@@ -25,10 +25,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center`}
       >
-        {children}
+        <html lang="en">
+  <body className="min-h-screen bg-gradient-to-r from-purple-400 to-blue-400 flex items-center justify-center">
+    {children}
+  </body>
+</html>
+        {/* <div className="w-full max-w-md p-6 rounded-3xl shadow-2xl bg-transparent">
+  {children}
+</div> */}
       </body>
     </html>
+    // <html lang="en">
+    //   <body
+    //     className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    //   >
+    //     {children}
+    //   </body>
+    // </html>
   );
 }
