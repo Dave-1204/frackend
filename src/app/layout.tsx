@@ -13,7 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+<<<<<<< HEAD
   title: "Dave Aberos"
+=======
+  title: "Dave Gabriel Aberos"
+>>>>>>> 20d3ae833bd875edf2e46d66b3b342495399b94f
 };
 
 export default function RootLayout({
