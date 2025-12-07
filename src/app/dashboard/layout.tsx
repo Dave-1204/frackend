@@ -1,33 +1,95 @@
 'use client';
+
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'; 
 import { getToken, logoutUser } from '@/lib/auth'; 
 import { Button } from '@/components/ui/button';
 
-export default function DashboardLayout({children}: { 
+export default function DashboardLayout({
+    children,
+}: {
     children: React.ReactNode;
 }) {
 
     const router = useRouter();
-    const token = getToken();
+    var [authChecked, setAuthChecked] = useState(false);
 
-    if (!token) {
-        router.push('/login');
-        return null;
-    }
+    useEffect(function() {
+        const token = getToken(); // runs only on client (safe)
+        if (!token) {
+            router.push('/login');
+        } else {
+            setAuthChecked(true);
+        }
+    }, [router]);
 
     function handleLogout() {
         logoutUser();
         router.push('/login');
     }
 
-    return (
-        <div className="p-6">
-        <header className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <Button variant="destructive" onClick={handleLogout}>Logout</Button> 
-        </header>
+    // Prevents rendering before token check finishes
+    if (!authChecked) return null;
 
-        {children} 
-        </div>
+
+    return (
+        <>
+            <main className="p-6">
+                {children}
+            </main>
+        </>
     );
 }
+
+            <header className="bg-white shadow-md p-4">
+                <h1 className="text-xl font-bold text-center">Dashboard</h1>
+            </header>
+    // return (
+    //     <div className="min-h-screen bg-gray-100">
+    //         <header className="bg-white shadow-md p-4 flex justify-between items-center">
+    //             <h1 className="text-xl font-bold">Dashboard</h1>
+    //             <Button variant="outline" onClick={handleLogout}>Logout</Button>
+    //         </header>
+    //         <main className="p-6">
+    //             {children}
+    //         </main>
+    //     </div>
+    // );
+
+
+// 'use client';
+
+// import React, { useEffect } from 'react';
+// import { useRouter } from 'next/navigation'; 
+// import { getToken, logoutUser } from '@/lib/auth'; 
+// import { Button } from '@/components/ui/button';
+
+// export default function DashboardLayout({children}: { 
+//     children: React.ReactNode;
+// }) {
+
+//     const router = useRouter();
+//     const token = getToken();
+
+//     if (!token) {
+//         router.push('/login');
+//         return null;
+//     }
+
+//     function handleLogout() {
+//         logoutUser();
+//         router.push('/login');
+//     }
+
+//     return (
+//         <div className="min-h-screen bg-gray-100">
+//             <header className="bg-white shadow-md p-4 flex justify-between items-center">
+//                 <h1 className="text-xl font-bold">Dashboard</h1>
+//                 <Button variant="outline" onClick={handleLogout}>Logout</Button>
+//             </header>
+//             <main className="p-6">
+//                 {children}
+//             </main>
+//         </div>
+//     );
+// }
